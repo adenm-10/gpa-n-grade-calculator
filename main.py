@@ -5,9 +5,9 @@ from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 
 class course:
-    def __init__(self, code, name, credits, grade):
+    def __init__(self, code, UCF, credits, grade):
         self.code = code
-        self.name = name
+        self.UCF = UCF
         self.credits = credits
         self.grade = grade
 
@@ -57,7 +57,7 @@ class MyTabWidget(QWidget):
 
         self.courses_tab.grid = QGridLayout(self)
 
-        self.courses_tab.grid.addWidget(QLabel("Course Name"), 0, 0)
+        self.courses_tab.grid.addWidget(QLabel("Course Code"), 0, 0)
         self.courses_tab.grid.addWidget(QLabel("Credits"), 0, 1)
         self.courses_tab.grid.addWidget(QLabel("Grade"), 0, 2)
 
