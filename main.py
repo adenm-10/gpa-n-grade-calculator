@@ -1,5 +1,6 @@
 import sys
 
+from save_mka import read_transcript
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 
@@ -24,51 +25,68 @@ class MainWindow(QWidget):
 
         self.grid = QGridLayout(self)
 
-        self.setGeometry(10, 10, 400, 200)
+        self.setGeometry(100, 100, 800, 200)
         self.setWindowTitle("GPA Calculator")
 
-        self.grid.addWidget(QLabel(""), 0, 0)
-        self.grid.addWidget(QLabel("Course Name"), 0, 1)
-        self.grid.addWidget(QLabel("Credits"), 0, 2)
-        self.grid.addWidget(QLabel("Grade"), 0, 3)
+        self.grid.addWidget(QLabel("Course Name"), 0, 0)
+        self.grid.addWidget(QLabel("Credits"), 0, 1)
+        self.grid.addWidget(QLabel("Grade"), 0, 2)
 
         for i in range(1, 6):
             combo = QComboBox()
             combo.addItems(["Grade", "A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D+", "D", "D-", "F"])
 
-            cur_course = "Course " + str(i)
-            self.grid.addWidget(QLabel(cur_course), i, 0)
+            self.grid.addWidget(QLineEdit(), i, 0)
             self.grid.addWidget(QLineEdit(), i, 1)
-            self.grid.addWidget(QLineEdit(), i, 2)
-            self.grid.addWidget(combo, i, 3)
+            self.grid.addWidget(combo, i, 2)
 
         self.button = QPushButton(text="Calculate GPA", parent=self)
-        self.button.clicked.connect(self.display_grades)
-        self.grid.addWidget(self.button, 7, 0, 1, 2)
+        self.button.clicked.connect(lambda: self.display_grades())
+        self.grid.addWidget(self.button, 7, 2, 1, 1)
 
-        self.label = QLabel(text="")
-        self.grid.addWidget(self.button, 7, 2, 1, 2)
+        self.semester_output_label = QLabel(text="", parent=self)
+        self.grid.addWidget(self.semester_output_label, 7, 0, 1, 2)
+
+        self.career_output_label = QLabel(text="", parent=self)
+        self.grid.addWidget(self.career_output_label, 8, 0, 1, 2)
     
     def display_grades(self):
         counter = 0
+        credits = 0
 
-        for i in range(1,5):
-            self.cur_grades[i][0] = self.grid.itemAtPosition(i, 1).widget().text()
-            self.cur_grades[i][1] = self.grid.itemAtPosition(i, 2).widget().text()
-            self.cur_grades[i][2] = self.grid.itemAtPosition(i, 3).widget().currentText()
+        for i in range(1, 6):
+            self.cur_grades[i-1][0] = self.grid.itemAtPosition(i, 0).widget().text()
+            self.cur_grades[i-1][1] = self.grid.itemAtPosition(i, 1).widget().text()
+            self.cur_grades[i-1][2] = self.grid.itemAtPosition(i, 2).widget().currentText()
 
             try:
-                counter += int(self.cur_grades[i][0]) * gpa_weights[self.cur_grades[i][0]]
+                self.cur_grades[i-1][1] = int(self.cur_grades[i-1][1])
             except:
                 continue
-        
 
-        self.label.setText("Your Semster GPA will be: " + str(counter))
+            counter += self.cur_grades[i-1][1] * gpa_weights[self.cur_grades[i-1][2]]
+            credits += self.cur_grades[i-1][1]
+
+        self.semester_output_label.setText("Semester GPA: " + str(round(counter/credits, 3)))
+
+        career_credits, career_gpa = read_transcript()
+        self.career_output_label.setText("Career GPA: " + str(round((counter + (career_credits * career_gpa))/(credits + career_credits), 3)))
 
         return 
+    
+class MyTabWidget(QWidget):
+    def __init__(self, parent):
+        super(QWidget, self).__init__(parent)
+        self.layout = QVBoxLayout(self)
 
-def add_course():
-    a = 1
+        self.tabs = QTabWidget()
+        self.courses_tab = QWidget()
+        self.grades_tab = QWidget()
+
+        self.tabs.addTab(self.courses_tab, "GPA")
+        self.tabs.addTab(self.grades_tab, "Grades")
+        
+           
 
 def main():
     
