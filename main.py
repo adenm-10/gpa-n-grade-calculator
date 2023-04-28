@@ -240,7 +240,7 @@ class Courses_Tab(QWidget):
     def save_courses(self):
         career = {}
 
-        with open('courses.csv', 'r') as csvfile:
+        with open('MKA\courses.csv', 'r') as csvfile:
             courses = list(csv.DictReader(csvfile))
 
         career = dict(courses[-1])
@@ -264,7 +264,7 @@ class Courses_Tab(QWidget):
 
         field_names = ['code', 'ucf', 'credits', 'grade']
 
-        with open("courses.csv", 'w') as csvfile:
+        with open("MKA\courses.csv", 'w') as csvfile:
             writer = csv.DictWriter(csvfile, fieldnames = field_names)
             writer.writeheader()
             writer.writerows(courses)

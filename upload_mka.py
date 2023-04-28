@@ -8,14 +8,12 @@ gpa_weights = {    "Grade": 0, "A": 4, "A-": 3.75,
                    "F": 0, "S": 0}
 
 def read_transcript():
-    reader = PyPDF2.PdfReader('mka.pdf')
+    reader = PyPDF2.PdfReader('MKA\mka.pdf')
     courses = []
     text = []
 
     name = reader.pages[0].extract_text().split("\n")
     name = name[0]
-    print("{" + name + "}")
-    
     
     for i, page in enumerate(reader.pages):
         text = page.extract_text()
@@ -51,8 +49,6 @@ def read_transcript():
     for string in text:
         if string == 0:
             continue
-
-        print(string)
         
         if string[-2:len(string)] == "IP":
             break
@@ -86,7 +82,7 @@ def read_transcript():
 
     field_names = ['code', 'ucf', 'credits', 'grade']
 
-    with open("courses.csv", 'w') as csvfile:
+    with open("MKA\courses.csv", 'w') as csvfile:
         writer = csv.DictWriter(csvfile, fieldnames = field_names)
         writer.writeheader()
         writer.writerows(courses)
