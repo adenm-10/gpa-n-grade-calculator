@@ -1,3 +1,5 @@
-/MKA/*
+MKA/*
+__pycache__
+venv
+
 !/MKA/.gitkeep
-/__pycache__
