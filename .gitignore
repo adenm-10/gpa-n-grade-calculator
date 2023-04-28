@@ -1,3 +1,3 @@
-/MKA/*.pdf
-/MKA/*.csv
+/MKA/*
+!/MKA/.gitkeep
 /__pycache__
