@@ -244,7 +244,6 @@ class Courses_Tab(QWidget):
             courses = list(csv.DictReader(csvfile))
 
         career = dict(courses[-1])
-        print(career)
 
         courses[-1]['code'] = self.grid.itemAtPosition(2, 0).widget().text()
         courses[-1]['ucf'] = 1
