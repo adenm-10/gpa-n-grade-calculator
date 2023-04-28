@@ -86,7 +86,7 @@ class Grades_Tab(QWidget):
     def __init__(self, parent):
         super(QWidget, self).__init__(parent)
 
-        self.cur_grades = [[0, 0, 0] for i in range(20)]
+        self.cur_grades = [[0, 0, 0] for i in range(21)]
         self.tab_depth = 2
 
         self.grid = QGridLayout()
@@ -197,7 +197,7 @@ class Courses_Tab(QWidget):
     def __init__(self, parent):
         super(QWidget, self).__init__(parent)
 
-        self.cur_grades = [[0, 0, 0] for i in range(6)]
+        self.cur_grades = [[0, 0, 0] for i in range(15)]
         self.tab_depth = 2
 
         self.grid = QGridLayout()
@@ -286,7 +286,7 @@ class Courses_Tab(QWidget):
             counter += self.cur_grades[i-1][1] * gpa_weights[self.cur_grades[i-1][2]]
             credits += self.cur_grades[i-1][1]
 
-        with open('courses.csv', 'r') as csvfile:
+        with open('MKA\courses.csv', 'r') as csvfile:
             reader = list(csv.DictReader(csvfile))
 
         career = reader[-1]
@@ -302,7 +302,7 @@ class Courses_Tab(QWidget):
         self.career_output_label.setText("Career GPA: " + str(round((counter + (career_credits * career_gpa))/(credits + career_credits), 3)))
     
     def add_course(self):
-        if self.tab_depth == 7:
+        if self.tab_depth == 15:
             return
 
         self.grid.itemAtPosition(self.tab_depth + 1, 0).widget().deleteLater()
