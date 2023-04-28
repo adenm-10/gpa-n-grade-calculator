@@ -1,4 +1,5 @@
 import sys
+import csv
 
 from save_mka import read_transcript
 from PyQt5.QtGui import *
@@ -15,7 +16,7 @@ gpa_weights = {    "Grade": 0, "A": 4, "A-": 3.75,
                    "B+": 3.25, "B": 3, "B-": 2.75,
                    "C+": 2.25, "C": 2, "C-": 1.75,
                    "D+": 1.25, "D": 1, "D-": 0.75,
-                   "F": 0}
+                   "F": 0, "S": 0}
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -49,7 +50,7 @@ class MyTabWidget(QWidget):
         self.tab_layout.addWidget(self.tabs)
         self.setLayout(self.tab_layout)
 
-    def setup_grades_tab(self): 
+    def setup_grades_tab(self):
         return
 
     def setup_courses_tab(self):
@@ -66,9 +67,9 @@ class MyTabWidget(QWidget):
         self.remove_button.clicked.connect(self.remove_course)
         self.courses_tab.grid.addWidget(self.remove_button, 0, 1, 1, 1)
 
-        #self.import_button = QPushButton(text="Import Current Courses", parent=self)
-        #self.import_button.clicked.connect()
-        #self.courses_tab.grid.addWidget(self.import_button, 0, 2, 1, 1)
+        self.import_button = QPushButton(text="Save Courses", parent=self)
+        self.import_button.clicked.connect(self.save_courses)
+        self.courses_tab.grid.addWidget(self.import_button, 0, 2, 1, 1)
 
         self.courses_tab.grid.addWidget(QLabel("Course Code"), 1, 0)
         self.courses_tab.grid.addWidget(QLabel("Credits"), 1, 1)
@@ -93,6 +94,39 @@ class MyTabWidget(QWidget):
         
         self.courses_tab.setLayout(self.courses_tab.grid)
     
+    def save_courses(self):
+        career = {}
+
+        with open('courses.csv', 'r') as csvfile:
+            courses = list(csv.DictReader(csvfile))
+
+        career = dict(courses[-1])
+        print(career)
+
+        courses[-1]['code'] = self.courses_tab.grid.itemAtPosition(2, 0).widget().text()
+        courses[-1]['ucf'] = 1
+        courses[-1]['credits'] = self.courses_tab.grid.itemAtPosition(2, 1).widget().text()
+        courses[-1]['grade'] = self.courses_tab.grid.itemAtPosition(2, 2).widget().currentText()
+
+        for i in range(3, self.tab_depth1 + 1):
+            course = {}
+
+            course['code'] = self.courses_tab.grid.itemAtPosition(i, 0).widget().text()
+            course['ucf'] = 1
+            course['credits'] = self.courses_tab.grid.itemAtPosition(i, 1).widget().text()
+            course['grade'] = self.courses_tab.grid.itemAtPosition(i, 2).widget().currentText()
+
+            courses.append(course)
+
+        courses.append(career)
+
+        field_names = ['code', 'ucf', 'credits', 'grade']
+
+        with open("courses.csv", 'w') as csvfile:
+            writer = csv.DictWriter(csvfile, fieldnames = field_names)
+            writer.writeheader()
+            writer.writerows(courses)
+
     def display_grades(self):
         counter = 0
         credits = 0
@@ -110,12 +144,19 @@ class MyTabWidget(QWidget):
             counter += self.cur_grades[i-1][1] * gpa_weights[self.cur_grades[i-1][2]]
             credits += self.cur_grades[i-1][1]
 
+        with open('courses.csv', 'r') as csvfile:
+            reader = list(csv.DictReader(csvfile))
+
+        career = reader[-1]
+
+        career_credits = int(float(career['credits']))
+        career_gpa = float(career['grade'])
+
         if credits == 0:
             self.semester_output_label.setText("Semester GPA: NA") 
         else:
             self.semester_output_label.setText("Semester GPA: " + str(round(counter/credits, 3)))
 
-        career_credits, career_gpa = read_transcript()
         self.career_output_label.setText("Career GPA: " + str(round((counter + (career_credits * career_gpa))/(credits + career_credits), 3)))
 
         return 
@@ -180,8 +221,6 @@ class MyTabWidget(QWidget):
         self.courses_tab.grid.addWidget(self.career_output_label, self.tab_depth1 + 2, 0, 1, 2)
 
         return
-
-
 
 def main():
     
