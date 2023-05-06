@@ -7,6 +7,7 @@ from CoursesTab import Courses_Tab
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 
+# Main Class for App to hold Tab Widget
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
@@ -19,6 +20,7 @@ class MainWindow(QMainWindow):
 
         self.show()
 
+# Main Tabbing widget to allow for tab organization
 class MyTabWidget(QWidget):
     def __init__(self, parent):
         super(QWidget, self).__init__(parent)
