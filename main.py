@@ -1,8 +1,8 @@
 import sys
 
-from GradesTab import Grades_Tab
-from FinalsTab import Finals_Tab
-from CoursesTab import Courses_Tab
+from tabs.GradesTab import Grades_Tab
+from tabs.FinalsTab import Finals_Tab
+from tabs.CoursesTab import Courses_Tab
 
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
@@ -42,7 +42,7 @@ class MyTabWidget(QWidget):
         return
 
 
-def main():
+if __name__ == '__main__':
     
     app = QApplication([])
 
@@ -50,5 +50,3 @@ def main():
     window.show()
 
     sys.exit(app.exec_()) 
-
-main()
