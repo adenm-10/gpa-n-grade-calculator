@@ -1,4 +1,6 @@
 import csv
+
+from MKA.upload_mka import read_transcript
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 
@@ -105,7 +107,15 @@ class Courses_Tab(QWidget):
             writer.writerows(courses)
 
     def import_mka(self):
-        return
+        filename = str(QFileDialog.getOpenFileName(self, "Select MKA", "", "*.pdf"))
+        filename = filename.replace('(', '')
+        filename = filename.replace(')', '')
+        filename = filename[1:-10]
+        try:
+            read_transcript(filename)
+            print("Successfully Uploaded")
+        except:
+            print("Error in upload")
 
     # Calculates what a students semester and career gpa would be with current inputs
     def display_grades(self):
@@ -159,6 +169,7 @@ class Courses_Tab(QWidget):
         self.grid.itemAtPosition(self.tab_depth + 1, 1).widget().deleteLater()
         self.grid.itemAtPosition(self.tab_depth + 1, 2).widget().deleteLater()
         self.grid.itemAtPosition(self.tab_depth + 2, 0).widget().deleteLater()
+        self.grid.itemAtPosition(self.tab_depth + 2, 2).widget().deleteLater()
 
         QApplication.processEvents()
 
@@ -176,6 +187,10 @@ class Courses_Tab(QWidget):
         self.gpa_button = QPushButton(text="Calculate GPA", parent=self)
         self.gpa_button.clicked.connect(lambda: self.display_grades())
         self.grid.addWidget(self.gpa_button, self.tab_depth + 1, 2, 1, 1)
+
+        self.import_mka_button = QPushButton(text="Import MKA", parent=self)
+        self.import_mka_button.clicked.connect(self.import_mka)
+        self.grid.addWidget(self.import_mka_button, self.tab_depth + 2, 2, 1, 1)
 
         self.semester_output_label = QLabel(text="", parent=self)
         self.grid.addWidget(self.semester_output_label, self.tab_depth + 1, 0, 1, 2)
@@ -196,6 +211,7 @@ class Courses_Tab(QWidget):
         self.grid.itemAtPosition(self.tab_depth + 1, 1).widget().deleteLater()
         self.grid.itemAtPosition(self.tab_depth + 1, 2).widget().deleteLater()
         self.grid.itemAtPosition(self.tab_depth + 2, 0).widget().deleteLater()
+        self.grid.itemAtPosition(self.tab_depth + 2, 2).widget().deleteLater()
 
         QApplication.processEvents()
 
@@ -204,6 +220,10 @@ class Courses_Tab(QWidget):
         self.gpa_button = QPushButton(text="Calculate GPA", parent=self)
         self.gpa_button.clicked.connect(self.display_grades)
         self.grid.addWidget(self.gpa_button, self.tab_depth + 1, 2, 1, 1)
+
+        self.import_mka_button = QPushButton(text="Import MKA", parent=self)
+        self.import_mka_button.clicked.connect(self.import_mka)
+        self.grid.addWidget(self.import_mka_button, self.tab_depth + 2, 2, 1, 1)
 
         self.semester_output_label = QLabel(text="", parent=self)
         self.grid.addWidget(self.semester_output_label, self.tab_depth + 1, 0, 1, 2)

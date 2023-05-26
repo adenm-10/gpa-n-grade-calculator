@@ -1,5 +1,6 @@
 MKA/*
 __pycache__/*
+tabs/__pycache__/*
 venv/*
 
 !/MKA/.gitkeep

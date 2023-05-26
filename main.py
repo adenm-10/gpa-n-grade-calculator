@@ -6,14 +6,16 @@ from tabs.CoursesTab import Courses_Tab
 
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
+from PyQt5 import QtGui
 
 # Main Class for App to hold Tab Widget
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
 
-        self.setGeometry(100, 100, 800, 200)
+        self.setGeometry(100, 100, 1000, 200)
         self.setWindowTitle("GPA Calculator")
+        self.setWindowIcon(QtGui.QIcon('icon.png'))
 
         self.tab_widget = MyTabWidget(self)
         self.setCentralWidget(self.tab_widget)
