@@ -19,3 +19,10 @@ Courses Tab: Used to calculate semester and career gpa depending on inputted cou
 Grades Tab: A broad tab application to look at theoretical course grades given all assignment categories, their weights, and their theorretical grades.
 
 Finals Tab: Given percent weight of a final, current grade in a course with all other assignments submitted/graded, and a desired final grade for overall course, will output needed grade on final to achieve desired grade.
+
+![image](https://github.com/adenm-10/gpa-n-grade-calculator/assets/61072840/9b078103-8c2a-4ce5-9ae2-b878e4e99053)
+
+![image](https://github.com/adenm-10/gpa-n-grade-calculator/assets/61072840/7a6403f9-1cec-4f48-bd6f-1616b6b1e6ab)
+
+![image](https://github.com/adenm-10/gpa-n-grade-calculator/assets/61072840/b2b9b0ff-2a68-41ea-ab95-d296850104aa)
+
