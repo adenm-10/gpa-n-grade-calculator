@@ -1,6 +1,5 @@
 MKA/courses.csv
 
 venv/
-!venv/.gitkeep
 
 */__pycache__

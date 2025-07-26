@@ -1,8 +1,8 @@
 import sys
 
-from tabs.GradesTab import Grades_Tab
-from tabs.FinalsTab import Finals_Tab
-from tabs.CoursesTab import Courses_Tab
+from src.GradesTab import Grades_Tab
+from src.FinalsTab import Finals_Tab
+from src.CoursesTab import Courses_Tab
 
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *

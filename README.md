@@ -25,7 +25,7 @@ pip install PyPDF2
 python3 main.py
 ````
 
-> 📄 The **Import Transcript** feature only works with UCF myKnightsAudit PDF documents.
+> The **Import Transcript** feature only works with UCF myKnightsAudit PDF documents.
 
 ---
 
@@ -51,7 +51,7 @@ Calculates the required score on the final exam.
 
 ---
 
-### 🖼️ Screenshots
+### Screenshots
 
 ![Courses Tab](https://github.com/adenm-10/gpa-n-grade-calculator/assets/61072840/9b078103-8c2a-4ce5-9ae2-b878e4e99053)
 

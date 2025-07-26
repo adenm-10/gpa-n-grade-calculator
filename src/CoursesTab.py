@@ -1,6 +1,6 @@
 import csv
 
-from MKA.upload_mka import read_transcript
+from src.UploadMKA import read_transcript
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 
